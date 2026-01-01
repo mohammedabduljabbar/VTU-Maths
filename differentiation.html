@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chapter 3 – Differentiation | VTU Maths Visual Lab</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: #f5f7fb;
+}
+
+.nav {
+    background: #1e3c72;
+    color: white;
+    padding: 16px 28px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.header {
+    text-align: center;
+    padding: 40px 20px 30px;
+}
+
+.card {
+    max-width: 1100px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+
+.visualizer {
+    margin-top: 20px;
+    padding: 20px;
+    background: #f8f9ff;
+    border-radius: 12px;
+}
+
+canvas {
+    width: 100%;
+    height: 420px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.controls {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.controls input {
+    width: 60px;
+    padding: 6px;
+    margin: 0 10px;
+}
+
+.controls button {
+    padding: 10px 22px;
+    margin: 5px;
+    font-size: 15px;
+    border-radius: 8px;
+    border: none;
+    background: #2a5298;
+    color: white;
+    cursor: pointer;
+}
+
+.step-box {
+    margin-top: 25px;
+    padding: 16px;
+    background: #eef2ff;
+    border-left: 6px solid #2a5298;
+    border-radius: 8px;
+}
+
+.step-log {
+    margin-top: 15px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.vtu-note {
+    margin-top: 28px;
+    padding: 18px 22px;
+    background: #eef3ff;
+    border-left: 5px solid #2a5298;
+    border-radius: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="nav">
+    <strong>VTU Maths Visual Lab</strong>
+    <a href="WebChittoor2.html">⬅ Back to Home</a>
+</div>
+
+<div class="header">
+    <h1>Chapter 3: Differentiation</h1>
+    <p>Understanding derivative as slope of tangent</p>
+</div>
+
+<div class="card">
+
+    <h2>Differentiation Visualizer (f(x) = x²)</h2>
+
+    <div class="visualizer">
+        <canvas id="graph"></canvas>
+    </div>
+
+    <div class="controls">
+        Point at x =
+        <input type="number" id="pointA" value="2">
+        <br><br>
+        <button id="animateBtn">▶ Animate</button>
+        <button id="nextBtn">⏭ Next Step</button>
+    </div>
+
+    <div class="step-box">
+        <strong>Current Step:</strong>
+        <div id="currentStep">Click a button to begin.</div>
+    </div>
+
+    <div class="step-log" id="stepLog">
+        <strong>Solution Steps:</strong>
+    </div>
+
+    <div class="vtu-note">
+        <h3>VTU Exam Alignment</h3>
+        <p>
+            In VTU examinations, differentiation is often interpreted
+            geometrically as the slope of the tangent to a curve.
+        </p>
+        <p>
+            This visualization helps students understand how the secant
+            line gradually becomes a tangent as h → 0, reinforcing
+            the concept of derivative from first principles.
+        </p>
+    </div>
+
+</div>
+
+<script>
+const canvas = document.getElementById("graph");
+const ctx = canvas.getContext("2d");
+canvas.width = canvas.offsetWidth;
+canvas.height = 420;
+
+function f(x) {
+    return x * x;
+}
+
+function drawAxes() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = "#999";
+
+    // X-axis
+    ctx.beginPath();
+    ctx.moveTo(50, 350);
+    ctx.lineTo(canvas.width - 50, 350);
+    ctx.stroke();
+
+    // Y-axis
+    ctx.beginPath();
+    ctx.moveTo(50, 50);
+    ctx.lineTo(50, 350);
+    ctx.stroke();
+
+    drawXAxisLabels(); // 👈 ADD THIS
+}
+
+
+function drawXAxisLabels() {
+    ctx.fillStyle = "#555";
+    ctx.font = "13px Segoe UI";
+
+    const xMin = -10;
+    const xMax = 10;
+    const step = 2;
+
+    for (let x = xMin; x <= xMax; x += step) {
+        const px = 50 + (x + 10) * ((canvas.width - 100) / 20);
+        ctx.fillText(x, px - 6, 370);
+    }
+}
+
+
+function drawCurve() {
+    ctx.strokeStyle = "#2a5298";
+    ctx.beginPath();
+
+    for (let x = -10; x <= 10; x += 0.05) {
+        const px = 50 + (x + 10) * ((canvas.width - 100) / 20);
+        const py = 350 - f(x) * 2.5;
+
+        if (x === -10) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+}
+
+function drawPoint(x, color) {
+    const px = 50 + (x + 10) * ((canvas.width - 100) / 20);
+    const py = 350 - f(x) * 2.5;
+
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(px, py, 6, 0, Math.PI * 2);
+    ctx.fill();
+}
+
+function drawSecant(a, h) {
+    const x1 = a;
+    const x2 = a + h;
+
+    const y1 = f(x1);
+    const y2 = f(x2);
+
+    const px1 = 50 + (x1 + 10) * ((canvas.width - 100) / 20);
+    const py1 = 350 - y1 * 2.5;
+
+    const px2 = 50 + (x2 + 10) * ((canvas.width - 100) / 20);
+    const py2 = 350 - y2 * 2.5;
+
+    ctx.strokeStyle = "red";
+    ctx.beginPath();
+    ctx.moveTo(px1, py1);
+    ctx.lineTo(px2, py2);
+    ctx.stroke();
+}
+
+drawAxes();
+drawCurve();
+
+let steps = [];
+let index = 0;
+
+function log(msg) {
+    document.getElementById("currentStep").textContent = msg;
+    document.getElementById("stepLog").innerHTML += `<div>${msg}</div>`;
+}
+
+function buildSteps() {
+    steps = [];
+    index = 0;
+    document.getElementById("stepLog").innerHTML = "<strong>Solution Steps:</strong>";
+
+    const a = Number(document.getElementById("pointA").value);
+
+    steps.push(() => {
+        drawAxes(); drawCurve();
+        drawPoint(a, "blue");
+        log(`Consider the point x = ${a}`);
+    });
+
+    steps.push(() => {
+        drawAxes(); drawCurve();
+        drawPoint(a, "blue");
+        drawPoint(a + 1, "green");
+        drawSecant(a, 1);
+        log(`Draw a secant line using x = a and x = a + h`);
+    });
+
+    steps.push(() => {
+        drawAxes(); drawCurve();
+        drawPoint(a, "blue");
+        drawPoint(a + 0.3, "green");
+        drawSecant(a, 0.3);
+        log(`As h → 0, the secant approaches the tangent`);
+    });
+
+    steps.push(() => {
+        drawAxes(); drawCurve();
+        drawPoint(a, "blue");
+        log(`Slope of tangent = derivative = 2a = ${2 * a}`);
+    });
+}
+
+function nextStep() {
+    if (index === 0) buildSteps();
+    if (index < steps.length) steps[index++]();
+}
+
+function animate() {
+    buildSteps();
+    let i = 0;
+    const interval = setInterval(() => {
+        if (i < steps.length) steps[i++]();
+        else clearInterval(interval);
+    }, 1400);
+}
+
+document.getElementById("nextBtn").onclick = nextStep;
+document.getElementById("animateBtn").onclick = animate;
+</script>
+
+</body>
+</html>

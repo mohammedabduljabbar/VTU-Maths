@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chapter 1 – Matrices | VTU Maths Visual Lab</title>
+
+<style>
+/* ---------- Global ---------- */
+body {
+    font-family: "Segoe UI", sans-serif;
+    background: #f5f7fb;
+    margin: 0;
+}
+
+/* ---------- Top Navigation ---------- */
+.nav {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+    padding: 16px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav h2 {
+    margin: 0;
+    font-size: 1.4rem;
+}
+
+.nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+/* ---------- Chapter Header ---------- */
+.chapter-header {
+    text-align: center;
+    padding: 50px 20px 30px;
+}
+
+.chapter-header h1 {
+    margin-bottom: 8px;
+    font-size: 2.2rem;
+}
+
+.chapter-header p {
+    color: #555;
+    font-size: 1.1rem;
+}
+
+/* ---------- Content Wrapper ---------- */
+.content {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* ---------- Chapter Card ---------- */
+.chapter-card {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+
+/* ---------- Matrix Playground ---------- */
+.matrix-title {
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+}
+
+.matrix-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    align-items: start;
+}
+
+.matrix-box h4 {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.matrix {
+    display: grid;
+    grid-template-columns: repeat(2, 70px);
+    gap: 10px;
+    justify-content: center;
+}
+
+.matrix input {
+    width: 70px;
+    height: 55px;
+    font-size: 18px;
+    text-align: center;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* ---------- Result ---------- */
+.result input {
+    background: #e8f5e9;
+    font-weight: bold;
+}
+
+/* ---------- Controls ---------- */
+.controls {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.controls button {
+    padding: 12px 26px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background: #2a5298;
+    color: white;
+}
+
+/* ---------- Formula ---------- */
+.formula {
+    margin-top: 20px;
+    font-size: 17px;
+    text-align: center;
+    color: #333;
+}
+
+/* ---------- Highlight ---------- */
+.highlight {
+    background: #ffe082;
+}
+
+.step-panel {
+    margin-top: 25px;
+    padding: 16px;
+    background: #eef2ff;
+    border-left: 6px solid #2a5298;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.step-log {
+    margin-top: 20px;
+    padding: 15px;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    max-height: 260px;
+    overflow-y: auto;
+    font-size: 15px;
+}
+
+.step-log div {
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+
+.vtu-note {
+    margin-top: 30px;
+    padding: 20px;
+    background: #f9fafc;
+    border-left: 6px solid #1e3c72;
+    border-radius: 10px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #1e3c72;
+}
+
+.vtu-note strong {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 16px;
+}
+
+.progress-wrap {
+    background: #e0e0e0;
+    height: 8px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px 0;
+}
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #4caf50, #2a5298);
+    transition: width 0.6s ease;
+}
+.progress-text {
+    font-size: 20px;
+    color: #1e3c72;
+    padding-left: 20px;
+}
+
+
+
+</style>
+</head>
+
+<body>
+
+<!-- Navigation -->
+<div class="nav">
+    <h2>VTU Maths Visual Lab</h2>
+    <a href="WebChittoor2.html">⬅ Back to Home</a>
+</div>
+
+<!-- Chapter Title -->
+<div class="chapter-header">
+    <h1>Chapter 1: Matrices</h1>
+    <p>Visualize and understand matrix operations step-by-step</p>
+</div>
+
+<div class="progress-wrap">
+    <div class="progress-bar" id="progressBar"></div>
+</div>
+<p class="progress-text" id="progressText">
+    Progress: 0%
+</p>
+
+
+<!-- Matrix Playground goes here -->
+<div class="content">
+    <div class="chapter-card">
+
+        <div class="matrix-title">
+            Matrix Multiplication Playground (2×2)
+        </div>
+
+        <div class="matrix-section">
+
+            <div class="matrix-box">
+                <h4>Matrix A</h4>
+                <div class="matrix" id="A">
+                    <input value="1"><input value="2">
+                    <input value="3"><input value="4">
+                </div>
+            </div>
+
+            <div class="matrix-box">
+                <h4>Matrix B</h4>
+                <div class="matrix" id="B">
+                    <input value="5"><input value="6">
+                    <input value="7"><input value="8">
+                </div>
+            </div>
+
+            <div class="matrix-box">
+                <h4>Result C</h4>
+                <div class="matrix result" id="C">
+                    <input disabled><input disabled>
+                    <input disabled><input disabled>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="controls">
+            <button id="animateBtn">▶ Animate</button>
+            <button id="nextStepBtn">⏭ Next Step</button>
+        </div>
+        
+        <<div class="step-panel">
+            <strong>Current Step:</strong>
+            <div id="stepText">Click Animate to begin.</div>
+        </div>
+        
+        <div class="step-log" id="stepLog">
+            <strong>Solution Steps:</strong>
+        </div>
+        
+        <div class="vtu-note">
+            <strong>Why this method is useful for VTU students</strong>
+        
+            <p>
+                In VTU examinations, matrix operations are evaluated not only based on the
+                final answer, but also on the correctness of intermediate steps such as
+                row–column selection, multiplication, and summation.
+            </p>
+        
+            <p>
+                This visual step-by-step approach helps students clearly understand how each
+                element of the result matrix is computed. By explicitly showing row-wise and
+                column-wise multiplication followed by addition, the learner develops a
+                structured problem-solving method.
+            </p>
+        
+            <p>
+                The persistent solution log mirrors the exact format expected in VTU answer
+                scripts, thereby training students to write clear, logical, and
+                well-presented solutions during examinations.
+            </p>
+        </div>
+        
+
+        <div class="formula" id="formula"></div>
+
+    </div>
+</div>
+
+<script>
+console.log("SCRIPT RUNNING");
+
+let stepQueue = [];
+let currentStepIndex = 0;
+let totalCells = 4;
+
+
+function updateProgress(percent) {
+    document.getElementById("progressBar").style.width = percent + "%";
+    document.getElementById("progressText").textContent =
+        `Progress: ${percent}%`;
+}
+
+    
+    /* ---------- Utility ---------- */
+    function delay(ms) {
+    const speed = document.getElementById("speedControl")?.value || ms;
+    return new Promise(resolve => setTimeout(resolve, speed));
+}
+
+function logStep(message) {
+    const stepText = document.getElementById("stepText");
+    const stepLog = document.getElementById("stepLog");
+
+    stepText.textContent = message;
+    stepLog.innerHTML += `<div>${message}</div>`;
+}
+
+function buildStepQueue() {
+    stepQueue = [];
+    currentStepIndex = 0;
+    updateProgress(0);
+
+    const A = document.querySelectorAll("#A input");
+    const B = document.querySelectorAll("#B input");
+    const C = document.querySelectorAll("#C input");
+    const stepLog = document.getElementById("stepLog");
+
+    stepLog.innerHTML = "<strong>Solution Steps:</strong>";
+    C.forEach(cell => {
+        cell.value = "";
+        cell.classList.remove("result");
+    });
+
+    for (let i = 0; i < 2; i++) {
+        for (let j = 0; j < 2; j++) {
+
+            stepQueue.push(() => {
+                logStep(`Compute C[${i + 1}][${j + 1}]`);
+            });
+
+            stepQueue.push(() => {
+                logStep(`Select Row ${i + 1} of Matrix A and Column ${j + 1} of Matrix B`);
+            });
+
+            let products = [];
+
+            for (let k = 0; k < 2; k++) {
+                stepQueue.push(() => {
+                    const a = A[i * 2 + k];
+                    const b = B[k * 2 + j];
+                    a.classList.add("highlight");
+                    b.classList.add("highlight");
+
+                    logStep(
+                        `Multiply A[${i + 1}][${k + 1}] × B[${k + 1}][${j + 1}] = ${a.value} × ${b.value}`
+                    );
+
+                    products.push(Number(a.value) * Number(b.value));
+
+                    setTimeout(() => {
+                        a.classList.remove("highlight");
+                        b.classList.remove("highlight");
+                    }, 300);
+                });
+            }
+
+            stepQueue.push(() => {
+                const sum = products.reduce((x, y) => x + y, 0);
+                logStep(`Add products: ${products.join(" + ")} = ${sum}`);
+
+                const cell = C[i * 2 + j];
+                cell.value = sum;
+                cell.classList.add("result");
+
+                const progress = Math.round(((i * 2 + j + 1) / totalCells) * 100);
+                updateProgress(progress);
+            });
+        }
+    }
+
+    stepQueue.push(() => {
+        logStep("✔ Matrix multiplication completed successfully.");
+        updateProgress(100);
+    });
+}
+
+function nextStep() {
+    if (currentStepIndex === 0 && stepQueue.length === 0) {
+        buildStepQueue();
+    }
+
+    if (currentStepIndex < stepQueue.length) {
+        stepQueue[currentStepIndex]();
+        currentStepIndex++;
+    }
+}
+
+
+    
+    /* ---------- Animation Logic ---------- */
+    async function animateMultiplication() {
+    const A = document.querySelectorAll("#A input");
+    const B = document.querySelectorAll("#B input");
+    const C = document.querySelectorAll("#C input");
+    const stepLog = document.getElementById("stepLog");
+
+    // RESET STATE
+    updateProgress(0);
+    stepLog.innerHTML = "<strong>Solution Steps:</strong>";
+
+    C.forEach(cell => {
+        cell.value = "";
+        cell.classList.remove("result");
+    });
+
+    let progress = 0;
+    const progressStep = 100 / 4; // 4 learning milestones
+
+    for (let i = 0; i < 2; i++) {
+        for (let j = 0; j < 2; j++) {
+
+            logStep(
+                `Step ${i * 2 + j + 1}: Compute element C[${i + 1}][${j + 1}]`
+            );
+            await delay(1500);
+
+            logStep(
+                `Select Row ${i + 1} of Matrix A and Column ${j + 1} of Matrix B`
+            );
+            await delay(1500);
+
+            let products = [];
+
+            for (let k = 0; k < 2; k++) {
+                const a = A[i * 2 + k];
+                const b = B[k * 2 + j];
+
+                a.classList.add("highlight");
+                b.classList.add("highlight");
+
+                logStep(
+                    `Multiply A[${i + 1}][${k + 1}] × B[${k + 1}][${j + 1}] = ${a.value} × ${b.value}`
+                );
+                await delay(1500);
+
+                products.push(Number(a.value) * Number(b.value));
+
+                a.classList.remove("highlight");
+                b.classList.remove("highlight");
+            }
+
+            const sum = products.reduce((x, y) => x + y, 0);
+
+            logStep(
+                `Add the products: ${products.join(" + ")} = ${sum}`
+            );
+            await delay(1500);
+
+            C[i * 2 + j].value = sum;
+            C[i * 2 + j].classList.add("result");
+
+            logStep(
+                `Place ${sum} in position C[${i + 1}][${j + 1}]`
+            );
+            await delay(1500);
+
+            // UPDATE PROGRESS AFTER EACH CELL
+            progress += progressStep;
+            updateProgress(Math.round(progress));
+        }
+    }
+
+    updateProgress(100);
+    logStep("✔ Matrix multiplication completed successfully.");
+
+    // OPTIONAL COMPLETION MESSAGE (if element exists)
+    const completionBox = document.getElementById("completionBox");
+    if (completionBox) {
+        completionBox.style.display = "block";
+    }
+}
+
+
+    
+    /* ---------- Event Binding ---------- */
+    document.addEventListener("DOMContentLoaded", function () {
+
+const animateBtn = document.getElementById("animateBtn");
+const nextStepBtn = document.getElementById("nextStepBtn");
+
+if (!animateBtn || !nextStepBtn) {
+    console.error("Buttons not found");
+    return;
+}
+
+animateBtn.addEventListener("click", animateMultiplication);
+nextStepBtn.addEventListener("click", nextStep);
+
+});
+
+
+    </script>
+    
+    
+
+
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>VTU Mathematics Visual Lab</title>
+
+<style>
+body {
+    font-family: "Segoe UI", sans-serif;
+    background: #f5f7fb;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+header p {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 40px 20px;
+}
+
+.section-title {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+}
+
+.chapters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    background: white;
+    border-radius: 14px;
+    padding: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+.card p {
+    color: #555;
+    line-height: 1.5;
+}
+
+.card button {
+    margin-top: 15px;
+    padding: 10px 18px;
+    font-size: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.active-btn {
+    background: #2a5298;
+    color: white;
+}
+
+.disabled-btn {
+    background: #ddd;
+    cursor: not-allowed;
+}
+
+.footer-info {
+    margin-top: 50px;
+    background: #eef2f7;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>VTU Mathematics Visual Lab</h1>
+    <p>Learn Engineering Mathematics through step-by-step visual understanding</p>
+</header>
+
+<div class="container">
+
+    <div class="section-title">📘 Mathematics – I (VTU)</div>
+
+    <div class="chapters">
+        <!-- Chapter 1 -->
+        <div class="card">
+            <h3>Chapter 1: Matrices</h3>
+            <p>
+                Visualize matrix operations like addition and multiplication
+                using animated row-column interaction.
+            </p>
+            <button class="active-btn" onclick="location.href='matrices2.html'">
+                Start Learning
+            </button>
+        </div>
+
+        <!-- Chapter 2 -->
+        <div class="card">
+            <h3>Chapter 2: Limits & Continuity</h3>
+            <p>
+                Understand limits and continuity visually by observing
+                left-hand and right-hand approaches on graphs.
+            </p>
+            <button class="active-btn" onclick="location.href='limits.html'">
+                Start Learning
+            </button>
+        </div>
+        
+
+        <!-- Chapter 3 -->
+        <div class="card">
+            <h3>Chapter 3: Differentiation</h3>
+            <p>
+                Learn derivatives by watching slopes and tangents form
+                dynamically on curves.
+            </p>
+            <button class="active-btn" onclick="location.href='differentiation.html'">
+                Start Learning
+            </button>
+        </div>
+    </div>
+
+    <div class="footer-info">
+        <strong>Why this platform?</strong><br><br>
+        ✔ Step-by-step animations<br>
+        ✔ VTU exam-oriented logic<br>
+        ✔ No memorization, only understanding
+    </div>
+
+</div>
+
+</body>
+</html>
+
